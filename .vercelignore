@@ -1,0 +1,5 @@
+# Ignore everything except the /api directory and package.json for dependencies
+*
+!/api
+!/api/*
+!package.json
