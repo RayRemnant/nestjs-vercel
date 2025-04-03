@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('new-route') // New route
+  getNewRoute(): string {
+    return 'This is a new route!';
+  }
 }
