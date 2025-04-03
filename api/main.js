@@ -68,6 +68,9 @@ let AppController = class AppController {
     getHello() {
         return this.appService.getHello();
     }
+    getNewRoute() {
+        return 'This is a new route!';
+    }
 };
 exports.AppController = AppController;
 __decorate([
@@ -76,6 +79,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)('new-route'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], AppController.prototype, "getNewRoute", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [typeof (_a = typeof app_service_1.AppService !== "undefined" && app_service_1.AppService) === "function" ? _a : Object])
