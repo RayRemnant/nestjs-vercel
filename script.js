@@ -23,3 +23,27 @@ const logParseFailed = (fileName, errorMessage) =>
     '\n',
     errorMessage,
   );
+
+async function updateTsConfig() {
+  const tsConfigPath = path.join(process.cwd(), 'tsconfig.json');
+
+  // if file does not exist, skip (user might not be using ts)
+  if (!fs.existsSync(tsConfigPath)) return logFileNotFound('.tsconfig.json');
+
+  const rawTsconfig = fs.readFileSync(tsConfigPath, 'utf8');
+  const tsconfig = JSON.parse(rawTsconfig);
+
+  if (!tsconfig.compilerOptions) {
+    tsconfig.compilerOptions = {};
+  }
+
+  if (tsconfig.compilerOptions.outDir == './api')
+    return logFileAlreadyUpdated('tsconfig.json');
+
+  tsconfig.compWilerOptions.outDir = './api';
+
+  fs.writeFileSync(tsConfigPath, JSON.stringify(tsconfig, null, 2), 'utf8');
+  logFileUpdated('tsconfig.json');
+}
+
+updateTsConfig();
