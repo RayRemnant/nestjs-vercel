@@ -47,3 +47,32 @@ async function updateTsConfig() {
 }
 
 updateTsConfig();
+
+async function updateTsConfigBuild() {
+  const tsconfigBuildPath = path.join(process.cwd(), 'tsconfig.build.json');
+
+  // if file does not exist, skip (user might not be using ts)
+  if (!fs.existsSync(tsconfigBuildPath))
+    return logFileNotFound('.tsconfig.build.json');
+
+  const rawTsconfigBuild = fs.readFileSync(tsconfigBuildPath, 'utf8');
+  const tsconfigBuild = JSON.parse(rawTsconfigBuild);
+
+  if (!tsconfigBuild.exclude) {
+    tsconfigBuild.exclude = [];
+  }
+
+  if (tsconfigBuild.exclude.includes('api'))
+    return logFileAlreadyUpdated('tsconfig.build.json');
+
+  tsconfigBuild.exclude.push('api');
+
+  fs.writeFileSync(
+    tsconfigBuildPath,
+    JSON.stringify(tsconfigBuild, null, 2),
+    'utf8',
+  );
+  logFileUpdated('tsconfig.build.json');
+}
+
+updateTsConfigBuild();
