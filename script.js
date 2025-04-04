@@ -1,28 +1,31 @@
 const fs = require('fs');
 const path = require('path');
-const { Chalk } = require('chalk');
 
-const chalk = new Chalk({ level: 1 });
+const colorize = (...args) => ({
+  black: `\x1b[30m${args.join(' ')}\x1b[0m`,
+  red: `\x1b[31m${args.join(' ')}\x1b[0m`,
+  green: `\x1b[32m${args.join(' ')}\x1b[0m`,
+  yellow: `\x1b[33m${args.join(' ')}\x1b[0m`,
+  blue: `\x1b[34m${args.join(' ')}\x1b[0m`,
+  magenta: `\x1b[35m${args.join(' ')}\x1b[0m`,
+  cyan: `\x1b[36m${args.join(' ')}\x1b[0m`,
+  white: `\x1b[37m${args.join(' ')}\x1b[0m`,
+});
 
 const logFileNotFound = (fileName) =>
-  console.log(chalk.yellow('❔ NOT FOUND'), chalk.bold(fileName));
+  console.log(colorize(`❔ NOT FOUND ${fileName}`).yellow);
 
 const logFileAlreadyUpdated = (fileName) =>
-  console.log(chalk.green('ℹ️  OK'), chalk.bold(fileName));
+  console.log(colorize(`ℹ️  OK ${fileName}`).blue);
 
 const logFileUpdated = (fileName) =>
-  console.log(chalk.blue('🔄 UPDATE OK'), chalk.bold(fileName));
+  console.log(colorize(`🔄 UPDATE OK ${fileName}`).green);
 
 const logFileCreated = (fileName) =>
-  console.log(chalk.green('✅ CREATED OK'), chalk.bold(fileName));
+  console.log(colorize(`✅ CREATED OK ${fileName}`).green);
 
 const logParseFailed = (fileName, errorMessage) =>
-  console.log(
-    chalk.red('❌ PARSE FAIL'),
-    chalk.bold(fileName),
-    '\n',
-    errorMessage,
-  );
+  console.log(colorize(`❌ PARSE FAIL ${fileName}\n${errorMessage}`).red);
 
 async function updateTsConfig() {
   const tsConfigPath = path.join(process.cwd(), 'tsconfig.json');
