@@ -225,20 +225,20 @@ async function updateVercelIgnore() {
     return logFileUpdated('.vercelignore');
   }
 
-  const vercelIgnoreContent = fs.readFileSync(vercelIgnorePath, 'utf8');
+  let vercelIgnoreContent = fs.readFileSync(vercelIgnorePath, 'utf8');
   const vercelIgnoreLines = vercelIgnoreContent.split(/\r?\n/);
 
   let update = false;
 
   const requiredLines = ['!package.json', '!/api', '!/api/*', '*'];
-  requiredLines.forEach((line) => {
-    if (!vercelIgnoreLines.includes(line)) {
+  requiredLines
+    .filter((line) => !vercelIgnoreLines.includes(line))
+    .forEach((line) => {
+      vercelIgnoreContent = `${line}\n${vercelIgnoreContent}`;
       update = true;
-      vercelIgnoreContent = `${line}\n\n${vercelIgnoreContent}`;
-    }
-  });
+    });
 
-  if (!update) logFileAlreadyUpdated('.vercelignore');
+  if (!update) return logFileAlreadyUpdated('.vercelignore');
 
   fs.writeFileSync(vercelIgnorePath, vercelIgnoreContent, 'utf8');
   return logFileUpdated('.vercelignore');
