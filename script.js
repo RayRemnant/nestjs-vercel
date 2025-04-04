@@ -141,7 +141,7 @@ module.exports = {
   if (!update) return logFileAlreadyUpdated('webpack.config.js');
 
   fs.writeFileSync(webpackConfigPath, webpackConfig, 'utf8');
-  logFileUpdated('webpack.config.js');
+  logFileCreated('webpack.config.js');
 }
 
 updateWebpackConfig();
