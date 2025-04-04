@@ -194,7 +194,10 @@ async function updateVercelJson() {
     update = true;
   }
 
-  if (!vercelConfig.outputDirectory || vercelConfig.outputDirectory !== '') {
+  if (
+    vercelConfig.outputDirectory === undefined ||
+    vercelConfig.outputDirectory !== ''
+  ) {
     vercelConfig.outputDirectory = '';
     update = true;
   }
