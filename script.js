@@ -76,3 +76,27 @@ async function updateTsConfigBuild() {
 }
 
 updateTsConfigBuild();
+
+async function updatePackageJson() {
+  const packageJsonPath = path.join(process.cwd(), 'package.json');
+
+  if (!fs.existsSync(packageJsonPath)) return logFileNotFound('package.json');
+
+  const rawPackageJson = fs.readFileSync(packageJsonPath, 'utf8');
+  const packageJson = JSON.parse(rawPackageJson);
+
+  if (!packageJson.scripts || !packageJson.scripts.build) return;
+
+  if (packageJson.scripts.build.includes('--builder=webpack'))
+    return logFileAlreadyUpdated('package.json');
+
+  packageJson.scripts.build += ' --builder=webpack';
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2),
+    'utf8',
+  );
+  logFileUpdated('package.json');
+}
+
+updatePackageJson();
