@@ -45,7 +45,11 @@ async function updateTsConfig() {
 
   tsconfig.compWilerOptions.outDir = './api';
 
-  fs.writeFileSync(tsConfigPath, JSON.stringify(tsconfig, null, 2), 'utf8');
+  fs.writeFileSync(
+    tsConfigPath,
+    JSON.stringify(tsconfig, null, 2) + '\n',
+    'utf8',
+  );
   logFileUpdated('tsconfig.json');
 }
 
@@ -72,7 +76,7 @@ async function updateTsConfigBuild() {
 
   fs.writeFileSync(
     tsconfigBuildPath,
-    JSON.stringify(tsconfigBuild, null, 2),
+    JSON.stringify(tsconfigBuild, null, 2) + '\n',
     'utf8',
   );
   logFileUpdated('tsconfig.build.json');
@@ -96,7 +100,7 @@ async function updatePackageJson() {
   packageJson.scripts.build += ' --builder=webpack';
   fs.writeFileSync(
     packageJsonPath,
-    JSON.stringify(packageJson, null, 2),
+    JSON.stringify(packageJson, null, 2) + '\n',
     'utf8',
   );
   logFileUpdated('package.json');
@@ -150,7 +154,7 @@ async function updateVercelJson() {
 
     fs.writeFileSync(
       vercelPath,
-      JSON.stringify(newVercelConfig, null, 2),
+      JSON.stringify(newVercelConfig, null, 2) + '\n',
       'utf8',
     );
     return logFileCreated('vercel.json');
@@ -190,7 +194,11 @@ async function updateVercelJson() {
 
   if (!update) return logFileAlreadyUpdated('vercel.json');
 
-  fs.writeFileSync(vercelPath, JSON.stringify(vercelConfig, null, 2), 'utf8');
+  fs.writeFileSync(
+    vercelPath,
+    JSON.stringify(vercelConfig, null, 2) + '\n',
+    'utf8',
+  );
   logFileUpdated('vercel.json');
 }
 
