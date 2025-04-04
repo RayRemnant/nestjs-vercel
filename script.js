@@ -100,3 +100,48 @@ async function updatePackageJson() {
 }
 
 updatePackageJson();
+
+async function updateWebpackConfig() {
+  const webpackConfigPath = path.join(process.cwd(), 'webpack.config.js');
+
+  const defaultConfig = {
+    entry: './src/main.ts',
+    target: 'node',
+    output: {
+      path: path.resolve(__dirname, 'api'),
+      filename: 'main.js',
+    },
+  };
+
+  // if file does not exist, create it with default configuration
+  if (!fs.existsSync(webpackConfigPath)) {
+    const defaultWebpackConfig = `const path = require('path');
+
+module.exports = {
+	${JSON.stringify(defaultConfig, null, 2)}
+}
+`;
+    fs.writeFileSync(webpackConfigPath, defaultWebpackConfig, 'utf8');
+    return logFileUpdated('webpack.config.js');
+  }
+
+  const webpackConfig = require('./webpack.config.js');
+
+  let update = false;
+
+  Object.keys(defaultConfig).forEach((key) => {
+    if (
+      JSON.stringify(webpackConfig[key]) !== JSON.stringify(defaultConfig[key])
+    ) {
+      webpackConfig[key] = defaultConfig[key];
+      update = true;
+    }
+  });
+
+  if (!update) return logFileAlreadyUpdated('webpack.config.js');
+
+  fs.writeFileSync(webpackConfigPath, webpackConfig, 'utf8');
+  logFileUpdated('webpack.config.js');
+}
+
+updateWebpackConfig();
