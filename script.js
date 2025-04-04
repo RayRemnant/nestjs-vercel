@@ -242,3 +242,25 @@ async function updateVercelIgnore() {
 }
 
 updateVercelIgnore();
+
+async function gitIgnore() {
+  const gitIgnorePath = path.join(process.cwd(), '.gitignore');
+
+  if (!fs.existsSync(gitIgnorePath)) {
+    fs.writeFileSync(gitIgnorePath, '.vercel', 'utf8');
+    return logFileCreated('.gitignore');
+  }
+
+  let gitIgnoreContent = fs.readFileSync(gitIgnorePath, 'utf8');
+  const gitignoreLines = gitIgnoreContent.split(/\r?\n/);
+
+  if (gitignoreLines.includes('.vercel'))
+    return logFileAlreadyUpdated('.gitignore');
+
+  gitIgnoreContent = `.vercel\n\n${gitIgnoreContent}`;
+
+  fs.writeFileSync(gitIgnorePath, gitIgnoreContent, 'utf8');
+  logFileUpdated('.gitignore');
+}
+
+gitIgnore();
