@@ -145,3 +145,64 @@ module.exports = {
 }
 
 updateWebpackConfig();
+
+async function updateVercelJson() {
+  const vercelPath = path.join(process.cwd(), 'vercel.json');
+
+  // if file does not exist, create it with default configuration
+  if (!fs.existsSync(vercelPath)) {
+    const newVercelConfig = {
+      version: 2,
+      rewrites: [
+        {
+          source: '/(.*)',
+          destination: '/api/main.js',
+        },
+      ],
+      outputDirectory: '',
+    };
+
+    fs.writeFileSync(
+      vercelPath,
+      JSON.stringify(newVercelConfig, null, 2),
+      'utf8',
+    );
+    return logFileCreated('vercel.json');
+  }
+
+  const rawVercelConfig = fs.readFileSync(vercelPath, 'utf8');
+  const vercelConfig = JSON.parse(rawVercelConfig);
+
+  let update = false;
+
+  if (
+    !vercelConfig.rewrites ||
+    !vercelConfig.rewrites.some(
+      (rewrite) =>
+        rewrite.source === '/(.*)' && rewrite.destination === '/api/main.js',
+    )
+  ) {
+    if (!vercelConfig.rewrites) {
+      vercelConfig.rewrites = [];
+    }
+
+    vercelConfig.rewrites.push({
+      source: '/(.*)',
+      destination: '/api/main.js',
+    });
+
+    update = true;
+  }
+
+  if (!vercelConfig.outputDirectory || vercelConfig.outputDirectory !== '') {
+    vercelConfig.outputDirectory = '';
+    update = true;
+  }
+
+  if (!update) return logFileAlreadyUpdated('vercel.json');
+
+  fs.writeFileSync(vercelPath, JSON.stringify(vercelConfig, null, 2), 'utf8');
+  logFileUpdated('vercel.json');
+}
+
+updateVercelJson();
