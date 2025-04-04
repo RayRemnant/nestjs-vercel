@@ -206,3 +206,39 @@ async function updateVercelJson() {
 }
 
 updateVercelJson();
+
+async function updateVercelIgnore() {
+  const vercelIgnorePath = path.join(process.cwd(), '.vercelignore');
+
+  // if file does not exist, create it with default configuration
+  if (!fs.existsSync(vercelIgnorePath)) {
+    const vercelIgnoreContent = `# Ignore everything except the /api directory and package.json for dependencies
+*
+!/api
+!/api/*
+!package.json
+`;
+    fs.writeFileSync(vercelIgnorePath, vercelIgnoreContent, 'utf8');
+    return logFileUpdated('.vercelignore');
+  }
+
+  const vercelIgnoreContent = fs.readFileSync(vercelIgnorePath, 'utf8');
+  const vercelIgnoreLines = vercelIgnoreContent.split(/\r?\n/);
+
+  let update = false;
+
+  const requiredLines = ['!package.json', '!/api', '!/api/*', '*'];
+  requiredLines.forEach((line) => {
+    if (!vercelIgnoreLines.includes(line)) {
+      update = true;
+      vercelIgnoreContent = `${line}\n\n${vercelIgnoreContent}`;
+    }
+  });
+
+  if (!update) logFileAlreadyUpdated('.vercelignore');
+
+  fs.writeFileSync(vercelIgnorePath, vercelIgnoreContent, 'utf8');
+  return logFileUpdated('.vercelignore');
+}
+
+updateVercelIgnore();
