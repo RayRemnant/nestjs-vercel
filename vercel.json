@@ -1,11 +1,10 @@
 {
-    "version": 2,
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/api/main.js"
-        }
-    ],
-    "outputDirectory": ""
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/main.js"
+    }
+  ],
+  "outputDirectory": ""
 }
-
