@@ -1,98 +1,66 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS Vercel Starter
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A minimal and production-ready starter template to deploy **NestJS** on **Vercel**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project was bootstrapped using `nest new`, and adapted to work seamlessly with **Vercel’s serverless architecture** by building and serving the app from the `/api` directory. No need to tweak the configuration on Vercel, `vercel.json` will handle this.
 
-## Description
+> ✅ Great for quick deployments, serverless APIs, or testing NestJS on Vercel.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Adapting Your Own NestJS Project
 
-## Project setup
+Want to bring your own NestJS project to Vercel?
 
-```bash
-$ npm install
-```
+You’ve got two options:
 
-## Compile and run the project
+1. **Follow the step-by-step guide**  
+   👉 [Read the blog post](https://42-commits-later.hashnode.dev/how-to-host-nestjs-on-vercel)
 
-```bash
-# development
-$ npm run start
+2. **Run the setup script**  
+   Use the `script.js` included in this repo by running `node script.js`, it will automatically configure everything for you.  
+   ⚠️ _Make sure to commit or back up your changes before running the script!_
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## 📦 Deployment Strategy
 
-## Run tests
+Vercel expects your backend code to live in the `/api` folder and be exportable as serverless functions.
+
+To support this:
+
+- The build process compiles the NestJS app into `/api`
+- Vercel picks up each entry point and deploys it as an independent serverless function
+- This setup enables fast, scalable, and low-maintenance backend deployments
+
+---
+
+## 🧪 Getting Started Locally
 
 ```bash
-# unit tests
-$ npm run test
+# install dependencies
+npm install
 
-# e2e tests
-$ npm run test:e2e
+# build the app into /api
+npm run build
 
-# test coverage
-$ npm run test:cov
+# install the vercel cli globally
+npm install -g vercel
+
+# deploy on vercel
+vercel deploy
 ```
 
-## Deployment
+.
+├── api/ # Compiled output, used by Vercel (do not edit directly)
+├── src/ # Your actual NestJS source code
+├── script.js # Setup script to make your NestJS project Vercel-ready
+└── vercel.json # Vercel configuration file
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🧠 Why NestJS + Vercel?
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Vercel is an intuitive platform packed with powerful features, perfect for projects of any scale.
+- As the creators of Next.js, they focus on building the perfect environment for modern web apps.
+- Best of all? It’s free to get started — and the free tier is incredibly generous.
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+## 🤝 Contributions
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Feel free to fork, submit issues, or contribute improvements!
