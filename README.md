@@ -49,12 +49,6 @@ npm install -g vercel
 vercel deploy
 ```
 
-.
-├── api/ # Compiled output, used by Vercel (do not edit directly)
-├── src/ # Your actual NestJS source code
-├── script.js # Setup script to make your NestJS project Vercel-ready
-└── vercel.json # Vercel configuration file
-
 ## 🧠 Why NestJS + Vercel?
 
 - Vercel is an intuitive platform packed with powerful features, perfect for projects of any scale.
